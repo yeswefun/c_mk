@@ -1,0 +1,222 @@
+
+
+
+FILE * fp = fopen("", "r");
+
+if (!fp) {
+    int errnum = ferror(fp);
+    return -1;
+}
+
+fclose(fp);
+
+
+
+
+int eof = feof(fp);
+    eof > 0, end
+    eof == 0, not end
+
+
+stdout
+stderr
+stdin
+    fprintf(); // 控制输出位置
+
+
+
+文本，二进制
+
+
+
+
+文件流的缓冲
+
+    setvbuf
+        buffer -> 全局 或 堆
+
+
+
+
+读取一个字符
+
+    getchar 从 stdin 中读取一个字符
+        int getchar(void);
+
+    getc, fgetc 从 指定流中读取一个字符
+        int fgetc(FILE *stream);
+        int getc(FILE *stream);
+
+    getchar() 等价于 getc(stdin)
+
+
+
+
+EOF 表示 文件末尾
+    无效字符值
+
+
+
+
+
+写入一个字符
+    putchar
+        int putchar( int c);
+        写入失败，则返回 EOF
+
+    putc, fputc
+        int fputc( int c, FILE *stream );
+        int putc( int c, FILE *stream );
+
+    putchar(c) 等价于 putc(c, stdout)
+
+
+
+
+读取一行字符
+    gets_s
+
+    char buffer[1024];
+
+    gets_s(buffer, 1024); // 1023 个字符，\0
+    fgets(buffer, 1024, stdin);
+
+    puts(buffer);
+    fputs(buffer, stdout);
+
+
+
+gets, fgets, puts, fputs 只能用于 文本内容的读写，不能用于 二进制内容
+
+
+读写字节 - fread & fwrite
+    序列化 与 反序列化
+
+
+
+格式化输入
+    int scanf(const char *format, ...);
+    int fscanf(FILE *stream, const char *format, ...);
+    int sscanf(const char *buffer, const char *format, ...);
+
+
+    int vscanf(const char *format, va_list vlist);
+    int vfscanf(FILE *stream, const char *format, va_list vlist);
+    int vsscanf(const char *buffer, const char *format, va_list vlist);
+
+
+
+格式化输出
+    int printf(const char *format, ...);
+    int fprintf(FILE *stream, const char *format, ...);
+    int sprintf(char *buffer, const char *format, ...);
+    int snprintf(char *buffer, int bufferSize, const char *format, ...);
+
+    int vprintf(const char *format, va_list vlist);
+    int vfprintf(FILE *stream, const char *format, va_list vlist);
+    int vsprintf(char *buffer, const char *format, va_list vlist);
+    int vsnprintf(char *buffer, int bufferSize, const char *format, va_list vlist);
+
+
+
+I/O重定向
+    #define stdin (__acrt_iob_func(0))
+    #define stdout (__acrt_iob_func(1))
+    #define stderr (__acrt_iob_func(2))
+
+    freopen
+
+    int dup(int fileDescriptor); // 重新打开
+    int dup2(int fileDescriptor, int fileDescriptor2); // 后面指向前面
+
+    int fileno(FILE *stream); // FILE* -> fileDescriptor
+    int close(int fileDescriptor); // 关闭 文件描述符
+
+
+
+--------------- dup
+
+fd0 -|
+     | -> FILE
+
+int fd1 = dup(fd0);
+
+fd0 -|
+     | -> FILE
+fd1 -|
+
+
+
+--------------- dup2
+
+fd0 -> FILE-0
+fd1 -> FILE-1
+
+dup2(fd0, fd1);
+
+fd0 -|
+     | -> FILE-0
+fd1 -|
+
+FILE-1 被关闭了
+
+
+
+
+$ python x.py > output.log 2>&1
+    标准输出 输出到 output.log
+    标准错误 输出到 output.log
+
+
+
+
+文件随机读写
+    多线程下载
+    多线程上传
+
+
+    ftell
+    fseek
+
+        fseek(fp, 10, SEEK_SET); // absolute, start
+        fseek(fp, 10, SEEK_CUR); // relative
+        fseek(fp, 10, SEEK_END); // absolute, end
+
+        fp 以 二进制 形式 打开
+            ftell 的 返回值 与 fseek 的 offset 都是 字节数
+
+        fp 以 文本 形式 打开
+            offset 的取值 只能是 0 或 ftell 的返回值
+            以 文本 形式 打开, ftell 的返回值并不是 字节数
+
+
+
+int remove(const char *_Filename);
+    0, success
+    -1, failure
+
+    remove
+
+
+int rename(const char *_OldFilename,const char *_NewFilename);
+    0, success
+    -1, failure
+
+    rename & move
+
+    setlocale(LC_ALL, "zh_CN.utf-8");
+
+
+long get_file_size(const char *file_path) {
+// windows, long, 4字节, 不支持4GB以上的文件
+//    struct _stat64 st64;
+    struct stat st;
+    stat(file_path, &st);
+    return st.st_size;
+}
+
+
+
+目录操作函数
+
+

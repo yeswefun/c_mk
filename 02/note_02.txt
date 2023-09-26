@@ -1,0 +1,110 @@
+
+
+
+函数
+    基本形式
+
+    形参，实参
+
+
+空参数函数
+    C
+    C++
+
+
+函数原型
+    函数名称
+    参数类型
+    参数顺序
+    返回值类型
+        C语言，如果没有写, 默认返回int
+
+
+变量类型和作用域
+
+    auto int i = 6;
+        auto 变量类型
+            自动分配内存，自动释放内存
+        int 数据类型
+
+    变量类型
+        auto
+            C++11, 有其它含义
+        static
+        register
+
+    作用域
+        块作用域
+        函数作用域
+        函数原型作用域
+        文件作用域
+
+Compiler Explorer
+    https://goodbolt.org
+
+
+
+CLion
+    ctrl + b
+        函数声明
+        多次，在函数声明与实现来回跳转
+
+    ctrl + alt + b
+        函数实现
+
+    ctrl + { 或 }
+
+
+C语言的编译过程
+    源码 -> 预处理器 -> 宏替换后的源码 -> 编译器 -> 中间文件 -> 链接器 -> 可执行程序
+
+
+头文件
+    #include ""
+        首先搜索当前源文件所在路径
+        查找工程的头文件搜索路径
+
+    #include <>
+        查找工程的头文件搜索路径
+
+
+宏函数
+    与 函数 的区别
+
+    宏函数: 字符串替换
+    函数: 先求值，再调用
+
+    宏函数问题
+        ++, --
+        优先级
+        参数求值
+        参数类型
+
+条件编译
+    防止头文件被重复包含
+
+    #ifdef
+    #ifndef
+    #if
+    以上三个需要 与 #endif 配对
+
+    defined(MACRO)
+        如果定义了 MACRO
+
+    #if defined(MACRO) 等价 #ifdef MARCO
+
+
+    #ifdef __cplusplus
+    extern "C" {
+    #endif
+
+    // ...
+
+    #ifdef __cplusplus
+    }
+    #endif
+
+
+    __FILE__
+    __LINE__
+    __FUNCTION__, 编译时才存在

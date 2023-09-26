@@ -1,0 +1,107 @@
+
+
+判断 字符类型
+    数字
+    小写字母
+    大写字母
+
+    查表法
+
+
+
+// string -> double
+double atof(const char *__nptr);
+
+// string -> integer
+int atoi(const char *__nptr);
+
+// string -> long
+long atol(const char *__nptr);
+
+// string -> long long
+long long atoll(const char *__nptr);
+
+
+
+// string -> long | long long
+strtol, strtoll
+
+// string -> unsigned long | unsigned long long
+strtoul, strtoull
+
+// string -> float
+strtof, strtod, strtold
+
+
+
+
+atoX 与 strtoX
+    atoX: 使用简单，适用于简单、要求不高的场景
+    strtoX: 可重复解析，更安全，功能更强大
+
+
+
+
+strlen
+strnlen
+
+strcmp
+strncmp
+
+strchr
+strrchr
+    反向
+
+strpbrk
+
+strstr
+    查找子串
+
+
+strtok
+
+strcat
+strncat
+
+strcpy
+strncpy
+
+原始内存操作，字符串默认是以 NULL 结尾, 即 字符 '\0'
+    memcpy
+    memcat
+    memset
+
+    memchr
+
+    memcmp
+
+
+    memcpy
+        不能进行内存覆盖
+    memmove
+        内存覆盖
+
+
+
+// C99 以前
+void* memcpy( void *dst, const void *src, size_t count );
+
+// C99
+void* memcpy( void *restrict dst, const void *restrict src, size_t count );
+
+
+
+memcpy 不允许内存重叠
+
+memmove 允许内存重叠
+
+
+
+C11 的 安全版本函数
+
+
+宽字符 与 字符 的转换
+    isalpha
+    iswalpha
+
+

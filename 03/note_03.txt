@@ -1,0 +1,73 @@
+
+
+数组 - Array
+
+    索引 起始值为 0
+
+    int arr[10];
+
+    int arr[10] = {1, 2, 3};
+
+    int arr[] = {1, 2, 3};
+
+    // C99
+    char carr[6] = {[2] = 'x', 'y', 'z' };
+
+
+
+arr[6] == arr + 6
+    数组名 为 数组 的 首地址
+
+
+
+VLA
+    变长数组
+
+    C99, 数组长度可以使用变量来 声明 的数组
+        GCC 支持
+
+        int size = 6;
+        int arr[size] = {1, 2, 3}; // error
+        int arr[size]; // ok
+
+    C++ 中的 const 是真正的常量
+
+
+字符串
+    本质: 字符数组
+
+    以 '\0' 结尾
+        char, 占一个字节
+        wchar_t, 占两个字节
+
+
+数组长度
+    整型数组的长度
+        int len = sizeof(arr) / sizeof(arr[0]);
+
+    字符数组的长度
+        int len = sizeof(arr) / sizeof(arr[0]);
+
+        字符数组有效字符长度
+        size_t len = strlen(arr);
+
+
+数组作为函数参数
+    退化成指针 - 效率
+        传数组，效率低下
+        传数组首地址，所以要传数组长度
+
+
+二维数组
+    数组的元素是 数组
+
+    作为函数参数
+
+
+打乱数组元素顺序
+
+快速排序
+    lomuto分区
+
+
+

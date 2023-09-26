@@ -1,0 +1,92 @@
+
+结构体 - struct
+
+    struct <结构体名> {
+        <成员类型> <成员名>;
+        ...
+    } <结构体变量>;
+
+    结构体声明
+
+        第一种方式
+            struct User {
+                int id;
+                char *name;
+            };
+
+            struct User u1;
+            struct User u2 = {6, "Java"};
+            struct User u3 = {.name = "Kotlin"};
+
+        第二种
+            struct Foo {
+                int id;
+                char *name;
+            } foo;
+
+            struct Foo foo1;
+
+        第三种
+            struct {
+                int id;
+                char *name;
+            } foo;
+
+            foo.id = 6;
+            foo.name = "Python";
+
+            struct {
+                int id;
+                char *name;
+            } bar {
+                6,
+                "Assembly"
+            };
+
+        第四种
+            typedef struct {
+                int id;
+                char *name;
+            } User;
+
+            User u;
+            User u = {6, "Typescript"};
+
+
+
+结构体大小
+    对齐 - align
+        为了让CPU高效率访问内存
+
+
+联合体 - union
+
+
+枚举 - enum
+
+
+字节序判断
+    01 02 03 04
+
+    小端序, 常用
+        0x04030201
+
+    大端序 - 网络传输
+        0x01020304
+
+
+字节序转换
+
+
+链表
+    虚拟头节点
+
+
+typedef 来源类型 目标类型;
+    typedef struct User User;
+
+    typedef struct {
+        int id;
+        char *name;
+    } User;
+

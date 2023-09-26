@@ -1,0 +1,166 @@
+
+
+指针 - Pointer
+
+    32位 - 4byte
+
+    64位 - 8byte
+
+
+    在 同一平台 (32位 或 64位)，不同类型的指针占用内存的大小相同
+
+
+
+
+只读指针变量 - 常量指针, 常量的指针
+
+    int x = 6;
+    const int *p1 = &x;
+    // *p1 = 8;
+
+    int const *p2 = &x;
+    // *p2 = 9;
+
+
+只读变量指针 - 指针常量, 指针是常量
+
+    int x = 6;
+    int y = 9;
+
+    int * const p = &x;
+    *p = 666;
+    // p = &y;
+
+
+只读指针
+
+    int x = 6;
+    int y = 8;
+
+    const int *const p1 = &x;
+
+    int const *const p2 = &y;
+
+//    *p1 = 666;
+//    p1 = &y;
+
+//    *p2 = 888;
+//    p2 = &x;
+
+
+
+应用
+    void my_strcpy(char *dst, const char *src);
+
+
+NULL
+    #define NULL ((void *)0)
+
+    if (p) { // p != NULL
+        free(p);
+        p = NULL;
+    }
+
+
+野指针
+    指向无效地址的指针
+
+
+指针的运算
+    +, -
+    ++, --
+
+    >
+    <
+    ==
+    !=
+
+
+左值与右值
+    int a;
+    a = 2;
+
+    a, 左值, 内存空间, storage
+    2, 右值, 值, value
+
+
+函数的返回值
+    从当前函数调用栈中的内存值拷贝到寄存器中，
+    再回到调用处，将寄存器中的值拷贝到内存中
+
+    (gdb) info registers rbp
+
+    传入参数
+
+    付出参数 - 指针
+
+
+    使用指针参数作为返回值
+        避免函数返回值带来的开销
+        实现函数的多个返回值的目的
+
+
+动态内存分配
+    stdlib.h
+
+    int *p = malloc(sizeof(int) * 4); // 4 * int
+        不对分配内存置0操作
+
+    free
+
+    int *p = calloc(numOfElements, sizeOfElements);
+        对分配内存置0操作
+
+    p = realloc(p, sizeof(int) * 4 * 2); // 8 * int
+        不对分配内存置0操作
+
+    以上分配内存的函数返回的值有可能为 NULL
+
+
+
+常见的指针使用错误
+    没有释放内存
+    使用已经释放的内存 - 野指针
+    越界访问
+    改变指针后，导致原来的分配的内存无法释放
+
+    避免对已经分配内存的指针修改
+    对 free 之后的指针手动置为 NULL
+    避免多个指针同时指向同一块内存
+    动态内存遵从谁分配谁释放的原则
+
+
+
+交换两个数
+    string.h
+        memcpy
+
+    gcc
+        int a = 1, b = 2;
+        typeof(a) tmp = a + b;
+
+    c++
+        decltype(a)
+
+
+
+    //#define SWAP(a, b) {typeof(a) tmp = a; a = b, b = tmp; }
+    #define SWAP(a, b) do {typeof(a) tmp = a; a = b, b = tmp; } while(0)
+
+        if (x)
+            SWAP(x, y); // 分号 导致 前面的 if 与 后面的 else 没有关系
+        else
+            printf("x == 0\n");
+
+
+
+
+quick sort
+    lomuto partition scheme
+    hoare partition scheme
+
+
+
+
+
+// ctrl + w 判断 优先级

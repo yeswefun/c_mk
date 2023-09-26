@@ -1,0 +1,73 @@
+
+
+VS2019
+
+
+MSYS2 - 包管理工具
+    配置仓库
+        mirrorlist_mginw32
+        mirrorlist_mginw64
+        mirrorlist_msys
+
+    更新
+        $ pacman -Su
+        $ pacman -Sy base-devel
+
+    安装 minggw - 提供 Windows 上的 POSIX 接口
+        $ pacman -S mingw-w64-x86_64-toolchain
+
+
+CLion
+    ToolBox
+    CMake
+
+
+CMakeLists.txt
+    配置*.c可以单独运行
+
+调试
+    Debug-MinGW
+        GDB
+
+    Debug-VS64
+        LLDB
+
+    New Watch
+
+    Evaluate Expression
+        alt + f8
+
+    反编译 - LLDB | GDB
+        $ disassemble
+
+    改变 汇编 风格 - intel | att
+        LLDB
+            $ settings set target.x86-disassembly-flavor intel
+
+            永久设置
+                在用户目录下，新建 .lldbinit
+                settings set target.x86-disassembly-flavor intel
+
+        GDB
+            $ set disassembly-flavor intel
+
+            永久设置
+                在用户目录下，新建 .gdbinit
+                set disassembly-flavor intel
+
+
+    Memory View
+        Show in Memory View
+            ctrl + enter
+
+        100 的 十六进制
+            64 00 00 00
+
+        两个十六进制 占 一个字节
+
+        小端序(Little Endian): 高位数存于高地址
+        大端序(Big Endian): 高位数存于低地址
+
+
+代码风格
+    google

@@ -1,0 +1,183 @@
+
+
+$ gcc -E 00_demo.c -o 00_demo.i
+    得到宏展开后的文件
+
+$ gcc -S 00_demo.i -o 00_demo.s
+    得到汇编文件
+
+$ gcc -c 00_demo.s -o 00_demo.o
+    得到二进制文件
+
+
+
+
+$ file 00_demo.o
+00_demo.o: Intel amd64 COFF object file, no line number info, not stripped, 7 sections, symbol offset=0x200,
+ 20 symbols, 1st section name ".text"
+
+    elf
+        executable linkable format
+
+    pe
+        portable executable
+
+
+
+
+$ ld 00_demo.o
+00_demo.o:00_demo.c:(.text+0x9): undefined reference to `__main'
+00_demo.o:00_demo.c:(.text+0x15): undefined reference to `puts'
+
+
+
+$ gcc -v 00_demo.o -o 00_demo
+
+
+
+$ file 00_demo.exe
+00_demo.exe: PE32+ executable (console) x86-64, for MS Windows
+
+
+
+
+静态链接库的构建和使用
+    编译阶段的行为 - 静态行为
+        *.a
+
+    程序运行的行为 - 动态行为
+        *.so
+
+
+
+
+
+
+
+静态链接库
+    $ gcc -I include/ -L lib/ -c src/*.c
+
+    $ ar rcs -o lib/libcalc.a add.o sub.o
+
+        $ pacman -S mingw-w64-x86_64-binutils
+            安装 ar
+
+    $ gcc main.c -I include/ -static -L lib/ -lcalc -o main_static
+
+    $ ./main_static
+
+
+# file src/add.c
+src/add.c: C source, ASCII text, with CRLF line terminators
+
+# file add.o
+add.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
+
+# file lib/libcalc.a
+lib/libcalc.a: current ar archive
+
+# file main_static
+main: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 3.2.0, BuildID[sha1]=4d54cbac1f0e081eee119f3bfac2dbf30fd1a558, not stripped
+
+
+
+# nm lib/libcalc.a
+
+add.o:
+0000000000000000 T add
+
+sub.o:
+0000000000000000 T sub
+
+
+
+# ar t lib/libcalc.a
+add.o
+sub.o
+
+
+
+
+
+
+
+
+动态链接库
+    # gcc src/*.c -I include/ -shared -fPIC -o lib/libcalc.so
+
+    # gcc main.c -I include/ -L lib/ -lutil -o main_dynamic
+
+    # export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/tmp/x/lib
+
+    # ./main_dynamic
+
+
+
+# file lib/libcalc.so
+lib/libcalc.so: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=716a89ae9374c4936195a3bac26e47416fd47911, not stripped
+
+
+# nm lib/libcalc.so
+
+# ldd main_dynamic
+    linux-vdso.so.1 (0x00007ffdcc7f9000)
+    libcalc.so => /lib/x86_64-linux-gnu/libcalc.so (0x00007f7a1949e000)
+    libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f7a192de000)
+    /lib64/ld-linux-x86-64.so.2 (0x00007f7a194b5000)
+
+
+# ld main_dynamic
+    ld: warning: cannot find entry symbol _start; not setting start address
+    ld: main_dynamic: undefined reference to `add'
+    ld: main_dynamic: undefined reference to `sub'
+
+
+# objdump -t lib/libcalc.so | grep sub
+
+
+# echo $LD_LIBRARY_PATH
+
+# export LD_LIBRARY_PATH=/tmp/x/lib
+# echo $LD_LIBRARY_PATH
+
+
+
+# readelf -a main_dynamic
+
+
+
+
+
+
+
+
+gcc命令的常用选项
+    -E 只运行 C 预编译器。
+    -S 只激活 预处理 和 编译，就是指把文件编译成为汇编代码。
+    -c 只激活 预处理, 编译 和 汇编,也就是他只把程序做成obj文件
+    -o FILE 生成指定的输出文件。用在生成可执行文件时。
+    -I 指定头文件的包含路径
+    -L 指定链接库的包含路径
+    -shared 创建共享库/动态库。
+    -static 使用静态链接。
+
+
+
+
+
+
+
+conan - 包管理工具
+
+# pip3 -V
+pip 18.1 from /usr/lib/python3/dist-packages/pip (python 3.7)
+
+# pip3 install conan
+
+# conan
+
+# conan search libcurl
+
+
+
+
